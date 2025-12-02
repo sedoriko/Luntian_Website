@@ -63,18 +63,17 @@ h3 {
     align-items: center;
 }
 
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--parchment);
+    letter-spacing: 1px;
+    cursor: pointer;
+}
 
-/* Styles specifically for the logo image */
 .logo-img {
     height: 55px; /* Adjust this value as needed */
     width: auto; 
-}
-
-.container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; 
-    padding: 0 20px; 
 }
 
 .nav-links {
@@ -248,8 +247,8 @@ h3 {
 
 /* Section Header */
 .section-header {
-    text-align: left; 
-    width: 100%;
+    text-align: center;
+    margin-bottom: 3rem;
 }
 
 .section-header h2 {
@@ -311,7 +310,7 @@ h3 {
 
 .product-filters {
     display: flex;
-    justify-content: flex-start; 
+    justify-content: center;
     gap: 1rem;
     margin-bottom: 3rem;
     flex-wrap: wrap;
@@ -337,7 +336,7 @@ h3 {
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 2rem;
 }
 
@@ -355,8 +354,6 @@ h3 {
 }
 
 .product-image {
-    height: 250px;
-    background: linear-gradient(135deg, var(--olive) 0%, var(--sage) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -372,6 +369,8 @@ h3 {
 
 .product-info {
     padding: 1.5rem;
+     background: var(--olive);
+
 }
 
 .product-info h3 {
@@ -509,7 +508,7 @@ h3 {
 .footer-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 5rem;
+    gap: 2rem;
     margin-bottom: 2rem;
 }
 
@@ -541,22 +540,19 @@ h3 {
     color: var(--olive);
 }
 
-/* Added display: flex to ensure margin-right works correctly */
 .social-links {
     display: flex;
+    gap: 1rem;
 }
 
 .social-link {
-    /* Square/circle button appearance */
     display: inline-flex; 
     align-items: center;
     justify-content: center;
-    width: 40px; 
+    width: 40px;
     height: 40px; 
+    padding: 0; 
     
-    /* Simplified margin property */
-    margin-right: 0.5rem; 
-
     background-color: var(--bark);
     border-radius: 50%; 
     color: var(--parchment); 
@@ -565,13 +561,9 @@ h3 {
     transition: background-color 0.3s, transform 0.3s;
 }
 
-.social-link:last-child {
-    margin-right: 0; 
-}
-
 .social-link:hover {
     background-color: var(--sage);
-    transform: translateY(-2px); /* Nice little lift effect on hover */
+    transform: translateY(-2px); 
 }
 
 .footer-bottom {
@@ -579,9 +571,6 @@ h3 {
     padding-top: 1rem;
     text-align: center;
     color: var(--sand);
-
-    clear: both;
-    width: 100%; 
 }
 
 /* Animations */
