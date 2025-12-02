@@ -69,19 +69,54 @@ if (contactForm) {
 }
 
 // Add to Cart Functionality (Order buttons)
-const orderButtons = document.querySelectorAll('.product-card .btn');
+// const orderButtons = document.querySelectorAll('.product-card .btn');
 
-if (orderButtons.length > 0) {
-    orderButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            const productCard = e.target.closest('.product-card');
-            const productName = productCard.querySelector('h3').textContent;
-            const productPrice = productCard.querySelector('.product-price').textContent;
+// if (orderButtons.length > 0) {
+//     orderButtons.forEach(button => {
+//         button.addEventListener('click', (e) => {
+//             const productCard = e.target.closest('.product-card');
+//             const productName = productCard.querySelector('h3').textContent;
+//             const productPrice = productCard.querySelector('.product-price').textContent;
             
-            alert("${productName}" added to your inquiry!\n\nPrice: ${productPrice}\n\nPlease contact us to complete your order.);
-        });
+//             alert(`${productName} added to your inquiry! \n\
+//                 Price: ${productPrice} \n\
+//                 Please contact us to complete your order.`);
+//         });
+//     });
+// }
+
+const modal = document.getElementById('inquiryModal');
+const closeModal = document.getElementById('closeModal');
+const modalProductName = document.getElementById('modalProductName');
+const modalProductPrice = document.getElementById('modalProductPrice');
+
+document.querySelectorAll(".product-card .btn").forEach(button => {
+    button.addEventListener("click", function () {
+        const card = this.closest(".product-card");
+        const name = card.querySelector("h3").innerText;
+        const price = card.querySelector(".product-price").innerText;
+
+        modalProductName.innerText = name;
+        modalProductPrice.innerText = price;
+
+        modal.style.display = "flex";
     });
-}
+});
+
+document.getElementById("modalOkBtn").addEventListener("click", function () {
+    document.getElementById("inquiryModal").style.display = "none";
+});
+
+closeModal.addEventListener("click", () => {
+    modal.style.display = "none";
+});
+
+window.addEventListener("click", function (e) {
+    if (e.target === modal) {
+        modal.style.display = "none";
+    }
+});
+
 
 // Scroll Reveal Animation
 const observerOptions = {
