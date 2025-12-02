@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Luntian</title>
+    <title>Shopping Cart - Luntian</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -11,7 +11,7 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
-            <a href="index.html" style="text-decoration: none;">
+            <a href="index.html">
             <div class="logo">
             <img src="assets\LUNTIANLOGO.png" alt="Luntian Logo" class="logo-img">
               </div>
@@ -27,31 +27,65 @@
                 <li><a href="products.html">Products</a></li>
                 <li><a href="season.html">Flowers Season</a></li>
                 <li><a href="contact.html">Contact Us</a></li>
-                <li><a href="cart.html" class="cart-icon" id="cartIcon"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a></li>
+                <li><a href="cart.html" class="cart-icon active" id="cartIcon"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- About Section -->
-    <section id="about" class="about">
+    <!-- Shopping Cart Section -->
+    <section class="shopping-cart">
         <div class="container">
             <div class="section-header">
-                <h2>About Luntian</h2>
-                <p>Bringing nature's beauty to your doorstep</p>
+                <h2>Shopping Cart</h2>
+                <p>Review your selected flowers</p>
             </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>Our Story</h3>
-                    <p>Luntian, meaning "green" in Filipino, represents our commitment to fresh, vibrant flowers that bring life and joy to every occasion. We source the finest blooms from local growers and deliver them with care across Metro Manila.</p>
-                    
-                    <h3>Our Mission</h3>
-                    <p>To bring joy and beauty into people's lives by delivering fresh, high-quality flowers with exceptional service, making every occasion more special.</p>
-                    
-                    <h3>Our Vision</h3>
-                    <p>To become Metro Manila's go-to flower shop, recognized for our unwavering commitment to freshness, reliability, and customer satisfaction.</p>
+
+            <div class="cart-content">
+                <div class="cart-items-wrapper">
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cartItemsTable">
+                            <!-- Cart items will be populated here -->
+                        </tbody>
+                    </table>
+                    <div id="emptyCartMessage" class="empty-cart-message">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>Your cart is empty</p>
+                        <a href="products.html" class="btn btn-primary">Continue Shopping</a>
+                    </div>
                 </div>
-                <div class="about-image">
-                    <div class="about-placeholder">🌺</div>
+
+                <div class="cart-summary">
+                    <div class="summary-card">
+                        <h3>Order Summary</h3>
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">₱0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping:</span>
+                            <span id="shipping">₱0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Delivery Fee:</span>
+                            <span id="deliveryFee">₱150.00</span>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row total-row">
+                            <span>Total:</span>
+                            <span id="totalPrice">₱0.00</span>
+                        </div>
+                        <button class="btn btn-primary btn-checkout" id="checkoutBtn">Proceed to Checkout</button>
+                        <a href="products.html" class="btn btn-secondary">Continue Shopping</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -93,13 +127,13 @@
                         <a href="mailto:contact@luntian.com" class="social-link" aria-label="Email Us">
                         <i class="fas fa-envelope"></i>    
                         </a>
-                        
                     </div>
                 </div>
             </div>
             </div><div class="footer-bottom">
                 <p>&copy; 2025 Luntian. All rights reserved.</p>
             </div>
+        </div>
     </footer>
 
     <script src="script.js"></script>
