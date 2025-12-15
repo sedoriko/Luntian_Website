@@ -1,6 +1,8 @@
 <?php 
-$pageTitle = "Products";
-include 'includes/header.php'; 
+    $pageTitle = "Products";
+    $activePage = "products";
+    include 'includes/db.php'; // Make sure this path is correct
+    include 'includes/header.php'; 
 ?>
 
     <section id="products" class="products">
@@ -18,26 +20,46 @@ include 'includes/header.php';
             </div>
 
             <div class="product-grid">
-                <div class="product-card" data-category="birthday">
-                    <div class="product-image">🌻</div>
+                <?php 
+                // FETCH PRODUCTS FROM DATABASE
+                $sql = "SELECT * FROM products";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0):
+                    while($product = $result->fetch_assoc()): 
+                ?>
+                <div class="product-card" data-category="<?php echo $product['category']; ?>" data-id="<?php echo $product['id']; ?>">
+                    <div class="product-image">
+                        <img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>">
+                    </div>
                     <div class="product-info">
-                        <h3>Sunshine Delight</h3>
-                        <p>Bright sunflowers and mixed blooms</p>
-                        <div class="product-price">₱850</div>
-                        <button class="btn btn-small">Order Now</button>
+                        <h3><?php echo $product['name']; ?></h3>
+                        <p><?php echo $product['description']; ?></p>
+                        <div class="product-price">₱<?php echo number_format($product['price'], 2); ?></div>
+                        <button class="btn btn-small add-to-cart-btn">Add to Cart</button>
                     </div>
                 </div>
-                <div class="product-card" data-category="anniversary">
-                    <div class="product-image">🌹</div>
-                    <div class="product-info">
-                        <h3>Classic Romance</h3>
-                        <p>Premium red roses bouquet</p>
-                        <div class="product-price">₱1,200</div>
-                        <button class="btn btn-small">Order Now</button>
-                    </div>
-                </div>
+                <?php 
+                    endwhile; 
+                else:
+                    echo "<p>No products found.</p>";
+                endif;
+                ?>
             </div>
         </div>
     </section>
+
+    <div id="inquiryModal" class="modal-overlay">
+        <div class="modal-card">
+            <span class="close-btn" id="closeModal">×</span>
+            <h3 id="modalProductName">Product</h3>
+            <p class="modal-price" id="modalProductPrice">₱0</p>
+            <p class="modal-message"></p>
+            <div class="modal-actions">
+                <button id="modalOkBtn" class="ok-btn">OK</button>
+                <a href="cart.php" class="contact-btn">View Cart</a> 
+            </div>
+        </div>
+    </div>
 
 <?php include 'includes/footer.php'; ?>
