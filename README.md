@@ -29,6 +29,7 @@ The site is designed to provide a seamless and visually appealing online shoppin
 ## 💻 Tech Stack & Tools
 
 * **Frontend:** HTML, CSS, JavaScript
+* **Backend:** PHP, MySQL
 * **Development Environment:** Visual Studio Code
 * **Version Control:** Git & GitHub
 * **Deployment:** GitHub Pages
