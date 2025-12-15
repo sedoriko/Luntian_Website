@@ -1,3 +1,9 @@
+<?php
+// Start session only if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +13,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">    
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <script src="script.js" defer></script>
 
     <style>
         /* Olive Garden Color Palette */
@@ -20,11 +28,7 @@
         }
 
         /* Reset & Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Montserrat', sans-serif;
@@ -33,36 +37,18 @@
             background-color: var(--parchment);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
         /* Typography */
-        h1, h2, h3, h4 {
-            font-family: 'playfair display', serif;
-            color: var(--olivewood);
-            margin-bottom: 1rem;
-        }
+        h1, h2, h3, h4 { font-family: 'playfair display', serif; color: var(--olivewood); margin-bottom: 1rem; }
+        h1 { font-size: 3rem; font-weight: 700; }
+        h2 { font-size: 2.5rem; }
+        h3 { font-size: 1.5rem; }
 
-        h1 {
-            font-size: 3rem;
-            font-weight: 700;
-        }
-
-        h2 {
-            font-size: 2.5rem;
-        }
-
-        h3 {
-            font-size: 1.5rem;
-        }
-
-        /* Navigation - UPDATED FOR SMALLER SIZE */
+        /* Navigation */
         .navbar {
             background-color: var(--olivewood);
-            padding: 1rem 0; /* Reduced padding from 1rem to 0.5rem */
+            padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -83,16 +69,14 @@
             cursor: pointer;
         }
 
-        .logo-img {
-            height: 55px; /* Reduced height from 55px to 40px */
-            width: auto; 
-        }
+        .logo-img { height: 55px; width: auto; }
 
         .nav-links {
             display: flex;
             list-style: none;
             gap: 2rem;
             margin: 0;
+            align-items: center;
         }
 
         .nav-links a {
@@ -104,16 +88,10 @@
             border-bottom: 2px solid transparent;
         }
 
-        .nav-links a:hover {
-            color: var(--olive);
-        }
+        .nav-links a:hover { color: var(--olive); }
+        .nav-links a.active { color: var(--olive); border-bottom: 2px solid var(--olive); font-weight: 600; }
 
-        .nav-links a.active {
-            color: var(--olive);
-            border-bottom: 2px solid var(--olive);
-            font-weight: 600;
-        }
-
+        /* Cart Icon */
         .cart-icon {
             position: relative;
             display: inline-flex;
@@ -125,28 +103,19 @@
             padding: 0.5rem;
             transform: translateY(-6px);
         }
-
-        .cart-icon:hover {
-            transform: scale(1.1);
-        }
-
+        .cart-icon:hover { transform: scale(1.1); }
         .cart-count {
             position: absolute;
-            top: -8px;
-            right: -8px;
+            top: -8px; right: -8px;
             background-color: var(--olive);
             color: var(--olivewood);
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: bold;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            width: 20px; height: 20px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; font-weight: bold;
         }
 
+        /* Mobile Menu */
         .menu-toggle {
             display: none;
             flex-direction: column;
@@ -155,63 +124,99 @@
             border: none;
             cursor: pointer;
         }
+        .menu-toggle span { width: 25px; height: 3px; background-color: var(--parchment); transition: 0.3s; }
 
-        .menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background-color: var(--parchment);
-            transition: 0.3s;
+        /* --- PROFILE DROPDOWN STYLES --- */
+        .profile-dropdown-container {
+            position: relative;
+            display: inline-block;
         }
 
-        /* Search Bar Styles */
-        .search-bar-container {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            padding: 0.35rem 0.5rem;
-            transition: background-color 0.3s;
-            height: 32px;
-        }
-
-        .search-bar-container:hover {
-            background-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .search-input {
-            background: transparent;
-            border: none;
-            color: var(--parchment);
-            padding: 0.25rem 0.4rem;
-            width: 140px;
-            outline: none;
-            font-size: 0.9rem;
-            font-family: inherit;
-            height: 100%;
-        }
-
-        .search-input::placeholder {
-            color: rgba(241, 237, 230, 0.7);
-        }
-
-        .search-btn {
-            background: none;
-            border: none;
-            color: var(--parchment);
-            cursor: pointer;
-            font-size: 0.95rem;
-            padding: 0.25rem 0.4rem;
-            transition: color 0.3s;
+        .profile-btn {
+            width: 38px;
+            height: 38px;
+            background-color: var(--olive);
+            color: var(--olivewood);
+            border: 2px solid var(--parchment);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100%;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
         }
 
-        .search-btn:hover {
-            color: var(--olive);
+        .profile-btn:hover {
+            background-color: var(--parchment);
+            color: var(--olivewood);
+            border-color: var(--olive);
+            transform: scale(1.05);
         }
+
+        .dropdown-menu {
+            display: none; /* Hidden by default */
+            position: absolute;
+            right: 0;
+            top: 55px; /* Pushed down slightly */
+            background-color: white;
+            min-width: 180px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            z-index: 9999; /* Ensure it's on top */
+            overflow: hidden;
+        }
+
+        /* The class added by JS to show the menu */
+        .dropdown-menu.show {
+            display: block !important;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        .dropdown-menu a {
+            color: var(--bark);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.95rem;
+            transition: background-color 0.2s;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            text-align: left;
+        }
+
+        .dropdown-menu a:last-child { border-bottom: none; }
+        .dropdown-menu a:hover { background-color: var(--parchment); color: var(--olivewood); }
+        .dropdown-menu i { margin-right: 10px; width: 20px; text-align: center; color: var(--olive); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Search Bar */
+        .search-bar-container {
+            display: flex; align-items: center; gap: 0.3rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px; padding: 0.35rem 0.5rem;
+            transition: background-color 0.3s; height: 32px;
+        }
+        .search-bar-container:hover { background-color: rgba(255, 255, 255, 0.15); }
+        .search-input {
+            background: transparent; border: none; color: var(--parchment);
+            padding: 0.25rem 0.4rem; width: 140px; outline: none;
+            font-size: 0.9rem; font-family: inherit; height: 100%;
+        }
+        .search-input::placeholder { color: rgba(241, 237, 230, 0.7); }
+        .search-btn {
+            background: none; border: none; color: var(--parchment);
+            cursor: pointer; font-size: 0.95rem; padding: 0.25rem 0.4rem;
+            transition: color 0.3s; display: flex; align-items: center;
+            justify-content: center; height: 100%;
+        }
+        .search-btn:hover { color: var(--olive); }
 
         /* Hero Section */
         .hero {
@@ -222,7 +227,6 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-
             background-image: url('assets/HERO2.png');
             background-size: cover;
             background-position: center;
@@ -953,72 +957,25 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .menu-toggle {
-                display: flex;
-            }
-            
+            .menu-toggle { display: flex; }
             .nav-links {
-                position: fixed;
-                left: -100%;
-                top: 70px;
-                flex-direction: column;
-                background-color: var(--olivewood);
-                width: 100%;
-                text-align: center;
-                transition: 0.3s;
-                box-shadow: 0 10px 27px rgba(0,0,0,0.05);
-                padding: 2rem 0;
+                position: fixed; left: -100%; top: 70px;
+                flex-direction: column; background-color: var(--olivewood);
+                width: 100%; text-align: center; transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0,0,0,0.05); padding: 2rem 0;
             }
+            .nav-links.active { left: 0; }
+            .search-bar-container { width: 90%; margin: 1rem auto; }
+            .search-input { width: 100%; }
+            .hero-title { font-size: 2rem; }
+            .hero-subtitle { font-size: 1rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
             
-            .nav-links.active {
-                left: 0;
-            }
-            
-            .search-bar-container {
-                width: 90%;
-                margin: 1rem auto;
-            }
-            
-            .search-input {
-                width: 100%;
-            }
-            
-            .hero-title {
-                font-size: 2rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1rem;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .map-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .team-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            h2 {
-                font-size: 1.8rem;
-            }
+            /* Profile Mobile */
+            .profile-dropdown-container { width: 100%; display: flex; flex-direction: column; align-items: center; margin-top: 10px; }
+            .dropdown-menu { position: static; width: 100%; background-color: rgba(0,0,0,0.05); box-shadow: none; text-align: center; }
+            .dropdown-menu a { text-align: center; color: var(--parchment); }
+            .dropdown-menu a:hover { background-color: rgba(255,255,255,0.1); }
         }
 
         /* Shopping Cart Page */
@@ -1222,12 +1179,43 @@
                 <li><a href="about.php" class="<?php echo ($activePage == 'about') ? 'active' : ''; ?>">About Us</a></li>
                 <li><a href="products.php" class="<?php echo ($activePage == 'products') ? 'active' : ''; ?>">Products</a></li>
                 <li><a href="season.php" class="<?php echo ($activePage == 'season') ? 'active' : ''; ?>">Flowers Season</a></li>
-                <li><a href="contact.php" class="<?php echo ($activePage == 'contact') ? 'active' : ''; ?>">Contact Us</a></li>
+                
                 <li class="search-bar-container">
                     <input type="text" class="search-input" id="searchInput" placeholder="Search products..." autocomplete="off">
                     <button class="search-btn" id="searchBtn"><i class="fas fa-search"></i></button>
                 </li>
+                
                 <li><a href="cart.php" class="cart-icon <?php echo ($activePage == 'cart') ? 'active' : ''; ?>" id="cartIcon"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a></li>
+                
+                <?php if(isset($_SESSION['user_id'])): 
+                    // Get first letter of name
+                    $initial = isset($_SESSION['user_name']) ? strtoupper(substr($_SESSION['user_name'], 0, 1)) : 'U';
+                ?>
+                    <li class="profile-dropdown-container">
+                        <div class="profile-btn" id="profileBtn" title="<?php echo htmlspecialchars($_SESSION['user_name']); ?>">
+                            <?php echo $initial; ?>
+                        </div>
+                        <div class="dropdown-menu" id="profileDropdown">
+                            <?php if(isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                                <a href="admin_orders.php" style="color: var(--olive); font-weight: bold;"><i class="fas fa-crown"></i> Admin Panel</a>
+                            <?php endif; ?>
+
+                            <a href="profile.php"><i class="fas fa-user"></i> My Profile</a>
+                            
+                            <?php if(!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin'): ?>
+                                <a href="my_orders.php"><i class="fas fa-box"></i> My Orders</a>
+                            <?php endif; ?>
+
+                            <a href="#" onclick="confirmLogout(event)"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </li>
+                <?php else: ?>
+                    <li><a href="login.php" class="<?php echo ($activePage == 'login') ? 'active' : ''; ?>">Login</a></li>
+                <?php endif; ?>
             </ul>
         </div>
     </nav>
+</body>
+</html>
+
+    

@@ -26,6 +26,7 @@
                         <tbody id="cartItemsTable">
                             </tbody>
                     </table>
+
                     <div id="emptyCartMessage" class="empty-cart-message">
                         <i class="fas fa-shopping-cart"></i>
                         <p>Your cart is empty</p>
@@ -49,8 +50,14 @@
                             <span>Total:</span>
                             <span id="totalPrice">₱0.00</span>
                         </div>
-                        <button class="btn btn-primary btn-checkout" id="checkoutBtn">Proceed to Checkout</button>
-                        <a href="products.php" class="btn btn-secondary">Continue Shopping</a>
+                        
+                        <form id="checkoutForm" action="checkout.php" method="POST">
+                            <input type="hidden" name="cart_data" id="hiddenCartData">
+                            
+                            <button type="submit" class="btn btn-primary btn-checkout" id="checkoutBtn">Proceed to Checkout</button>
+                        </form>
+
+                        <a href="products.php" class="btn btn-secondary" style="width: 100%; text-align: center; margin-top: 10px;">Continue Shopping</a>
                     </div>
                 </div>
             </div>
